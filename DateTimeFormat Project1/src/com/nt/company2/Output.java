@@ -1,14 +1,49 @@
 package com.nt.company2;
 
+import java.beans.Statement;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.sql.*;
+
 
 import com.nt.company1.SleepTime;
 
 public class Output {
+		//DataBase Connection
+		try
+		{
+		Class.forName("oracle.jdbc.driver.OracleDriver");  
+		  
+		//step2 create  the connection object  
+		Connection con=DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe","system","12345");  
+		  
+		//step3 create the statement object  
+		java.sql.Statement st=con.createStatement();  
+		  
+		//step4 execute query  
+		ResultSet rs=st.executeQuery("select * from SLEEP_TIME");
+		//print the data that are stored in the dataBase
+		while(rs.next())
+		{
+		
+		System.out.println(rs.getInt(1)+"  "+rs.getInt(2)+" "+rs.getString(3)+"  "+rs.getString(4)); 
+		}
+		  
+		//step5 close the connection object  
+		con.close();  
+		  
+		}catch(Exception e)
+		{ 
+		  System.out.println(e);
+		}
+		System.out.println();
+		 //Required Output 
 
 	public static void main(String[] args) {
 		ArrayList<SleepTime> al = new Output().insertData();
